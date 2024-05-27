@@ -1,11 +1,13 @@
 defmodule Day3 do
   def main() do
-    result =
-      File.read!("./input.txt")
-      |> parse()
-      |> part_1()
+    IO.puts("Day 3")
+    input = File.read!("./input.txt") |> parse()
 
-    IO.puts("Part 1: #{result}")
+    p1 = Part1.part_1(input)
+    IO.puts("Part 1: #{p1}")
+
+    p2 = Part2.part_2(input)
+    IO.puts("Part 2: #{p2}")
   end
 
   def parse(input) do
@@ -18,66 +20,6 @@ defmodule Day3 do
     line
     |> String.split("", trim: true)
     |> Enum.map(&String.to_integer/1)
-  end
-
-  def part_1(items) do
-    gamma_rate(items) * epsilon_rate(items)
-  end
-
-  def gamma_rate([]) do
-    0
-  end
-
-  def gamma_rate(items) do
-    items
-    |> represent()
-    |> bin_to_int()
-  end
-
-  def epsilon_rate(items) do
-    items
-    |> represent()
-    |> invert()
-    |> bin_to_int()
-  end
-
-  def represent(list) do
-    list
-    |> Enum.zip()
-    |> Enum.map(&Tuple.to_list/1)
-    |> Enum.map(&Enum.sum/1)
-    |> Enum.map(fn n ->
-      if n > Enum.count(list) / 2 do
-        1
-      else
-        0
-      end
-    end)
-  end
-
-  def invert([]) do
-    []
-  end
-
-  def invert([head | tail]) do
-    value =
-      case head do
-        1 -> 0
-        0 -> 1
-      end
-
-    [value | invert(tail)]
-  end
-
-  def bin_to_int([]) do
-    0
-  end
-
-  def bin_to_int([head | tail]) do
-    n = Enum.count(tail)
-
-    value = head * 2 ** n
-    value + bin_to_int(tail)
   end
 end
 
