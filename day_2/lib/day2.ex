@@ -3,6 +3,7 @@ defmodule Day2 do
     input = parse(File.read!("./input.txt"))
 
     IO.puts("Part 1: #{part_1(input)}")
+    IO.puts("Part 2: #{part_2(input)}")
   end
 
   def parse(input_str) do
@@ -21,35 +22,11 @@ defmodule Day2 do
   end
 
   def part_1(input) do
-    horizontal(input) * vertical(input)
+    Part1.part_1(input)
   end
 
-  def horizontal([]) do
-    0
-  end
-
-  def horizontal([{:forward, x} | tail]) do
-    x + horizontal(tail)
-  end
-
-  def horizontal([_ | tail]) do
-    horizontal(tail)
-  end
-
-  def vertical([]) do
-    0
-  end
-
-  def vertical([{:down, x} | tail]) do
-    x + vertical(tail)
-  end
-
-  def vertical([{:up, x} | tail]) do
-    -x + vertical(tail)
-  end
-
-  def vertical([_ | tail]) do
-    vertical(tail)
+  def part_2(input) do
+    Part2.part_2(input)
   end
 end
 
