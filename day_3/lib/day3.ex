@@ -1,5 +1,7 @@
 defmodule Day3 do
-  def main() do
+  use Application
+
+  def start(_, _) do
     IO.puts("Day 3")
     input = File.read!("./input.txt") |> parse()
 
@@ -8,6 +10,8 @@ defmodule Day3 do
 
     p2 = Part2.part_2(input)
     IO.puts("Part 2: #{p2}")
+
+    {:ok, self()}
   end
 
   def parse(input) do
@@ -22,5 +26,3 @@ defmodule Day3 do
     |> Enum.map(&String.to_integer/1)
   end
 end
-
-Day3.main()
