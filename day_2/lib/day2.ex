@@ -1,9 +1,29 @@
 defmodule Day2 do
+  use Task
+
   def main() do
     input = parse(File.read!("./input.txt"))
 
-    IO.puts("Part 1: #{part_1(input)}")
-    IO.puts("Part 2: #{part_2(input)}")
+    p1 = Part1.part_1(input)
+    p2 = Part2.part_2(input)
+
+    IO.puts("Part 1: #{p1}")
+    IO.puts("Part 2: #{p2}")
+  end
+
+  def main_p() do
+    parse(File.read!("./input.txt"))
+    |> then(fn input ->
+      [
+        Task.async(Part1, :part_1, [input]),
+        Task.async(Part2, :part_2, [input])
+      ]
+    end)
+    |> Task.await_many()
+    |> then(fn [p1, p2] ->
+      IO.puts("Part 1: #{p1}")
+      IO.puts("Part 2: #{p2}")
+    end)
   end
 
   def parse(input_str) do
@@ -31,3 +51,4 @@ defmodule Day2 do
 end
 
 Day2.main()
+Day2.main_p()

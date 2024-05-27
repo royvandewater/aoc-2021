@@ -1,6 +1,14 @@
 defmodule Part1 do
+  use Task
+
   def part_1(input) do
-    horizontal(input) * vertical(input)
+    [
+      fn -> horizontal(input) end,
+      fn -> vertical(input) end
+    ]
+    |> Enum.map(&Task.async/1)
+    |> Task.await_many()
+    |> then(fn [h, v] -> h * v end)
   end
 
   def horizontal([]) do
