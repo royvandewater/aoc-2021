@@ -6,6 +6,7 @@ defmodule Day6 do
 
     input = File.read!("./input.txt") |> parse!()
     IO.puts("part 1: #{part_1(input)}")
+    IO.puts("part 2: #{part_2(input)}")
 
     {:ok, self()}
   end
@@ -17,25 +18,24 @@ defmodule Day6 do
   end
 
   def part_1(input) do
-    days(input, 80)
-    |> Enum.count()
-  end
-
-  defp days(input, 0), do: input
-
-  defp days(input, n) do
     input
-    |> day()
-    |> days(n - 1)
+    |> School.new()
+    |> days(80)
+    |> School.count()
   end
 
-  def day([]), do: []
+  def part_2(input) do
+    input
+    |> School.new()
+    |> days(256)
+    |> School.count()
+  end
 
-  def day([head | rest]) do
-    if head > 0 do
-      [head - 1 | day(rest)]
-    else
-      [6 | day(rest)] ++ [8]
-    end
+  defp days(school, 0), do: school
+
+  defp days(school, n) do
+    school
+    |> School.day()
+    |> days(n - 1)
   end
 end

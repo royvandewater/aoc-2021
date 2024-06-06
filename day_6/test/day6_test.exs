@@ -8,17 +8,10 @@ defmodule Day6Test do
     end
   end
 
-  describe "day" do
-    test "with an empty list" do
-      assert Day6.day([]) == []
-    end
-
-    test "with a single fish at 3" do
-      assert Day6.day([3]) == [2]
-    end
-
-    test "with a fish at 0, about to reproduce, and another at 3" do
-      assert Day6.day([0, 3]) == [6, 2, 8]
+  describe "part_2" do
+    test "example 1" do
+      input = [3, 4, 3, 1, 2]
+      assert Day6.part_2(input) == 26_984_457_539
     end
   end
 
