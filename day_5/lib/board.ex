@@ -1,6 +1,9 @@
 defmodule Board do
   def new(), do: %{}
 
+  def from_lines([]), do: new()
+  def from_lines([line | rest]), do: from_lines(rest) |> Board.add(line)
+
   def add(board, {{x0, y}, {x1, y}}) do
     x0..x1
     |> Enum.map(&{&1, y})

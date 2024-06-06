@@ -1,10 +1,21 @@
-defmodule Day5Test do
+defmodule BoardTest do
   use ExUnit.Case
-  doctest Day5
 
   describe "new" do
     test "should construct a new board" do
       assert Board.new() == %{}
+    end
+  end
+
+  describe "from_lines" do
+    test "when called with an empty list" do
+      board = Board.from_lines([])
+      assert board == %{}
+    end
+
+    test "when called with one line" do
+      board = Board.from_lines([{{0, 0}, {2, 0}}])
+      assert board == %{{0, 0} => 1, {1, 0} => 1, {2, 0} => 1}
     end
   end
 
