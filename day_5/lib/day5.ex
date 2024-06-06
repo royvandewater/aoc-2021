@@ -6,6 +6,7 @@ defmodule Day5 do
 
     input = File.read!("./input.txt") |> parse!()
     IO.puts("part 1: #{part_1(input)}")
+    IO.puts("part 2: #{part_2(input)}")
 
     {:ok, self()}
   end
@@ -34,6 +35,12 @@ defmodule Day5 do
   def part_1(input) do
     input
     |> Enum.filter(&straight_line/1)
+    |> Board.from_lines()
+    |> Board.score()
+  end
+
+  def part_2(input) do
+    input
     |> Board.from_lines()
     |> Board.score()
   end

@@ -38,6 +38,12 @@ defmodule BoardTest do
       assert board == %{{0, 0} => 1, {0, 1} => 1, {0, 2} => 1}
     end
 
+    test "when called with a diagonal line segment" do
+      board = Board.new() |> Board.add({{0, 0}, {2, 2}})
+
+      assert board == %{{0, 0} => 1, {1, 1} => 1, {2, 2} => 1}
+    end
+
     test "when called with two line segments that overlap" do
       board = Board.new() |> Board.add({{0, 0}, {2, 0}}) |> Board.add({{0, 0}, {0, 2}})
 

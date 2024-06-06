@@ -16,6 +16,12 @@ defmodule Board do
     |> Enum.reduce(board, &add_cell/2)
   end
 
+  def add(board, {{x0, y0}, {x1, y1}}) do
+    [x0..x1, y0..y1]
+    |> Enum.zip()
+    |> Enum.reduce(board, &add_cell/2)
+  end
+
   defp add_cell(cell, board) do
     Map.update(board, cell, 1, &(&1 + 1))
   end
