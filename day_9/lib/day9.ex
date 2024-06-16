@@ -1,9 +1,13 @@
 defmodule Day9 do
+  alias Day9.Basin
+  alias Day9.Heightmap
+
   def parse!(str) do
     str
     |> String.trim()
     |> String.split("\n", trim: true)
     |> Enum.map(&parse_line/1)
+    |> Heightmap.new()
   end
 
   defp parse_line(line) do
@@ -13,46 +17,40 @@ defmodule Day9 do
     |> Enum.map(&String.to_integer/1)
   end
 
-  def part_1(input) do
-    input
+  def part_1(heightmap) do
+    heightmap
     |> low_points()
     |> Enum.map(&(&1 + 1))
     |> Enum.sum()
   end
 
-  def low_points(rows) do
-    coordinates(rows)
-    |> Enum.filter(&low_point?(&1, rows))
-    |> Enum.map(&value_at(&1, rows))
+  def part_2(heightmap) do
+    heightmap
+    |> Map.filter(&low_point?(&1, heightmap))
+    |> Map.keys()
+    |> Enum.map(&Basin.discover(&1, heightmap))
+    |> Enum.map(&MapSet.size/1)
+    |> Enum.sort()
+    |> Enum.reverse()
+    |> Enum.take(3)
+    |> Enum.product()
   end
 
-  defp coordinates(rows) do
-    rows
-    |> Enum.with_index()
-    |> Enum.map(&row_coordinates/1)
-    |> List.flatten()
+  def low_points(heightmap) do
+    heightmap
+    |> Map.filter(&low_point?(&1, heightmap))
+    |> Map.values()
   end
 
-  defp row_coordinates({row, y}) do
-    row
-    |> Enum.with_index()
-    |> Enum.map(fn {_, x} -> {x, y} end)
-  end
-
-  defp low_point?({x, y}, rows) do
-    v0 = value_at({x, y}, rows)
-
+  defp low_point?({{x, y}, v0}, heightmap) do
     [
       {x + 1, y},
       {x - 1, y},
       {x, y + 1},
       {x, y - 1}
     ]
-    |> Enum.map(&value_at(&1, rows))
+    |> Enum.map(&Map.get(heightmap, &1))
     |> Enum.reject(&is_nil/1)
     |> Enum.all?(&(v0 < &1))
   end
-
-  defp value_at({x, y}, _) when x < 0 or y < 0, do: nil
-  defp value_at({x, y}, rows), do: rows |> Enum.at(y, []) |> Enum.at(x, nil)
 end
