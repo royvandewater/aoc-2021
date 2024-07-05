@@ -17,5 +17,5 @@ defmodule Day11 do
 
   def part_1(input), do: Cave.simulate(input)
 
-  def part_2(_), do: 0
+  def part_2(input), do: Cave.simulate_until_sync(input)
 end
