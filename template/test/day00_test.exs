@@ -14,7 +14,7 @@ defmodule Day00Test do
   end
 
   describe "part_2" do
-    test "example 1" do
+    test "empty input" do
       assert Day00.part_2([]) == 0
     end
   end
